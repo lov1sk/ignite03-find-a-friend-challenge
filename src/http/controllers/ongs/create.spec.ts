@@ -20,9 +20,6 @@ describe("Create Ong e2e", () => {
       whatsapp: "11 951759923",
     });
 
-    const { ong } = response.body;
-
     expect(response.status).toEqual(201);
-    expect(ong.id).toEqual(expect.any(String));
   });
 });

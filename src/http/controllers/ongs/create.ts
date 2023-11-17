@@ -19,7 +19,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createOngUseCase = makeCreateOngUseCase();
   try {
     const { ong } = await createOngUseCase.execute(requestData);
-    return reply.status(201).send({ ong });
+    return reply.status(201).send();
   } catch (error) {
     if (error instanceof OngAlreadyExistsError) {
       return reply.status(409).send({ message: error.message });

@@ -75,8 +75,3 @@ personalizado para rodar os testes end-to-end
 - [x] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp
 - [x] Todos os filtros, além da cidade, são opcionais
 - [x] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
-
-=> Criar docker compose OK
-=> Criar repositorio github OK
-=> Criar fluxo CI
-=> Comentar codigo
