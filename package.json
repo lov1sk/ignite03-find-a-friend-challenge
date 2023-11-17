@@ -1,0 +1,41 @@
+{
+  "name": "ignite03-find-a-friend-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts",
+    "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
+    "test:install-prisma-environment": "npm link vitest-environment-prisma ",
+    "test": "vitest run --dir src/use-cases",
+    "test:watch": "vitest --dir src/use-cases",
+    "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment ",
+    "test:e2e": "vitest run --dir src/http",
+    "test-watch:e2e": "vitest --dir src/http"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "2.4.6",
+    "@types/node": "20.9.0",
+    "@types/supertest": "2.0.16",
+    "npm-run-all": "4.1.5",
+    "prisma": "5.5.2",
+    "supertest": "6.3.3",
+    "tsup": "7.2.0",
+    "tsx": "4.1.2",
+    "typescript": "5.2.2",
+    "vite-tsconfig-paths": "4.2.1",
+    "vitest": "0.34.6"
+  },
+  "dependencies": {
+    "@fastify/cookie": "9.1.0",
+    "@fastify/jwt": "7.2.3",
+    "@prisma/client": "5.5.2",
+    "bcryptjs": "2.4.3",
+    "dotenv": "16.3.1",
+    "fastify": "4.24.3",
+    "zod": "3.22.4"
+  }
+}
