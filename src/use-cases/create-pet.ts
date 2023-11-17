@@ -31,12 +31,19 @@ export class CreatePetUseCase {
     independence,
     ong_id,
   }: CreatePetUseCaseRequest): Promise<CreatePetUseCaseResponse> {
+    /**
+     * É Feito uma busca para verificar se a ong que esta tentando criar o pet
+     * tem um registro valido salvo no banco de dados
+     */
     const ongExists = await this.ongRepository.findOngById(ong_id);
 
     if (!ongExists) {
       throw new ResourceNotFoundError();
     }
 
+    /**
+     * Cadastra o pet na aplicação
+     */
     const pet = await this.petRepository.create({
       name,
       about,
