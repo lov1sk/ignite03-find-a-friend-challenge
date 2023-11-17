@@ -17,6 +17,9 @@ export class FetchPetsByCityUseCase {
     city,
     ongInstance,
   }: FetchPetsByCityUseCaseRequest): Promise<FetchPetsByCityUseCaseResponse> {
+    /**
+     * Realiza a busca em todos os pets da cidade
+     */
     const pets = await this.petsRepository.findManyByCity(city, ongInstance);
     return {
       pets,

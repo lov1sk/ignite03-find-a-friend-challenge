@@ -28,14 +28,23 @@ export class CreateOngUseCase {
     password,
     whatsapp,
   }: CreateOngUseCaseRequest): Promise<CreateOngUseCaseResponse> {
+    /**
+     * Verificação se ja existe uma ong cadastrada com o email passado
+     */
     const ongAlreadyExists = await this.ongRepository.findOngByEmail(email);
 
     if (ongAlreadyExists) {
       throw new OngAlreadyExistsError();
     }
 
+    /**
+     * Faz hash da senha para garantir a segurança dos dados
+     */
     const password_hash = await hash(password, 6);
 
+    /**
+     * Cria e retorna a ong cadastrada
+     */
     const ong = await this.ongRepository.create({
       name,
       email,

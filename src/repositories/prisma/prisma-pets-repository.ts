@@ -5,6 +5,9 @@ import { InMemoryOngRepository } from "../in-memory/in-memory-ong-repository";
 import type { caracteristic } from "../pet-repository";
 
 export class PrismaPetsRepository implements IPetRepository {
+  /**
+   * Cria um novo pet no banco de dados
+   */
   async create({
     name,
     about,
@@ -28,6 +31,9 @@ export class PrismaPetsRepository implements IPetRepository {
 
     return pet;
   }
+  /**
+   * Deleta o pet com base em seu id
+   */
   async deleteById(petId: string) {
     await prisma.pet.delete({
       where: {
@@ -35,6 +41,9 @@ export class PrismaPetsRepository implements IPetRepository {
       },
     });
   }
+  /**
+   * Procura pets em ongs pela cidade em que estão vinculados
+   */
   async findManyByCity(city: string, ongInstance?: InMemoryOngRepository) {
     const pets = await prisma.pet.findMany({
       where: {
@@ -45,6 +54,10 @@ export class PrismaPetsRepository implements IPetRepository {
     });
     return pets;
   }
+
+  /**
+   * Busca se existe um pet salvo na base de dados e o retorna se o resultado for positivo
+   */
   async findPetById(petId: string) {
     const pet = await prisma.pet.findUnique({
       where: {
@@ -79,12 +92,6 @@ export class PrismaPetsRepository implements IPetRepository {
     ${caracteristic.age} LIKE pets.age OR ${caracteristic.energy} LIKE pets.energy  OR ${caracteristic.size} LIKE pets.size OR ${caracteristic.independence} LIKE pets.independence
     `;
 
-    console.log(pets);
-
     return pets;
   }
 }
-/**
- *
-    
- */

@@ -1,6 +1,10 @@
 import "dotenv/config";
 import { z } from "zod";
 
+/**
+ * Cria um schema para tipar as variaveis de ambiente
+ */
+
 const envSchema = z.object({
   NODE_ENV: z.enum(["dev", "test", "prod"]),
   DATABASE_URL: z.string(),

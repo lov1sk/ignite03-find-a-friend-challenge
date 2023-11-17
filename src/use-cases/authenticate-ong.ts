@@ -19,12 +19,16 @@ export class AuthenticateOngUseCase {
     email,
     password,
   }: AuthenticateOngUseCaseRequest): Promise<AuthenticateOngUseCaseResponse> {
+    /**
+     * Realiza a busca para ver se o email passado esta correto
+     */
     const ong = await this.ongRepository.findOngByEmail(email);
 
     if (!ong) {
       throw new ResourceNotFoundError();
     }
 
+    // Verifica se a senha fornecida é igual a senha que foi persistida previamente
     const isSamePassword = await compare(password, ong.password_hash);
 
     if (!isSamePassword) {

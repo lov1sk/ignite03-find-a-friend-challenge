@@ -5,6 +5,9 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { z } from "zod";
 
 export async function auth(request: FastifyRequest, reply: FastifyReply) {
+  /**
+   * Cria tipagem para o corpo da requisição e resgata seus dados
+   */
   const ongAuthenticationRequestSchema = z.object({
     email: z.string().email(),
     password: z.string(),
@@ -21,6 +24,10 @@ export async function auth(request: FastifyRequest, reply: FastifyReply) {
       email,
       password,
     });
+
+    /**
+     * Cria um token e um refresh token para garantir a autenticação da ong
+     */
 
     const token = await reply.jwtSign(
       {},
@@ -41,6 +48,10 @@ export async function auth(request: FastifyRequest, reply: FastifyReply) {
       }
     );
 
+    /**
+     * Retorna os 2 tokens para o cliente, porem o refresh token é encapsulado dentro dos cookies
+     * e só pode ser visto pelo backend
+     */
     return reply
       .setCookie("refreshToken", refreshToken, {
         path: "/", //Todas as rotas do backend podem usar

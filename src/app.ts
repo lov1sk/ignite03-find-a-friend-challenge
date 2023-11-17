@@ -6,8 +6,14 @@ import { ZodError } from "zod";
 import { env } from "./env";
 import { petsRoutes } from "./http/controllers/pets";
 
+/**
+ * Instancia do fastify
+ */
 export const app = fastify();
 
+/**
+ * Plugins fastify
+ */
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
   cookie: {
@@ -21,6 +27,11 @@ app.register(fastifyJwt, {
 app.register(fastifyCookie);
 app.register(ongsRoutes);
 app.register(petsRoutes);
+
+/**
+ * Adicionando ao handler de erros do fastify inteligencia para determinar
+ * se existe erros de validações causados pelo zod
+ */
 app.setErrorHandler((error, _request, reply) => {
   // se for um erro de validação,ele retorna o StatusCode 400 para o cliente
   if (error instanceof ZodError) {

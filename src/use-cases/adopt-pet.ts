@@ -22,7 +22,11 @@ export class AdoptPetUseCase {
   async execute({
     petId,
   }: AdoptPetUseCaseRequest): Promise<AdoptPetUseCaseResponse> {
-    // se o repositorio for in memory, fazer o codigo abaixo
+    /**
+     * Se for passado um repositorio em memoria, primeiro realiza a busca
+     * no repositorio de pets e se houver um pet salvo, realiza a busca da
+     * ong que o pet esta cadastrado
+     */
     if (this.petsRepository instanceof InMemoryPetRepository) {
       const pet = await this.petsRepository.findPetById(petId);
       if (!pet) {
@@ -43,6 +47,11 @@ export class AdoptPetUseCase {
       };
     }
 
+    /**
+     * Caso o repositorio seja do prisma, faz uma query apenas
+     * para buscar tanto os dados do pet como da ong onde ele
+     * esta cadastrado
+     */
     const pet: any = await this.petsRepository.findPetById(petId);
     if (!pet) {
       throw new ResourceNotFoundError();

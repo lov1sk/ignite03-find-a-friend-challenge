@@ -35,7 +35,9 @@ export class SearchPetsUseCase {
       return { pets };
     }
 
-    // age: valor
+    /**
+     * Se houver filtros listar os pets da cidade com base nos filtros passados
+     */
 
     const pets = await this.petRepository.searchPetsByQuery(
       city,
