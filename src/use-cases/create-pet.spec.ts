@@ -30,7 +30,7 @@ describe("Create Pet Use Case", () => {
       age: "Child",
       energy: "Low",
       size: "Small",
-      independenceLevel: "Low",
+      independence: "Low",
       ong_id: "Ong-1",
     });
 

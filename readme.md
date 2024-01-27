@@ -10,28 +10,6 @@ que estão na mesma cidade que a pessoa que irá adotar.
 
 Para enfim realizar a adoção, a pessoa escolhe o pet desejado, e entra em contato com a ong via whats-app.
 
-### Executar o projeto
-
-- Instalar dependencias
-
-```bash
-  npm init -y
-
-  npm i
-```
-
-- Iniciar containers
-
-```bash
-  docker compose up -d
-```
-
-- Iniciar servidor
-
-```bash
-  npm run start:dev
-```
-
 ### Tecnologias
 
 <div style="display: inline_block">         
@@ -41,37 +19,113 @@ Para enfim realizar a adoção, a pessoa escolhe o pet desejado, e entra em cont
   <img align="center" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain-wordmark.svg" />
 </div><br/>
 
-### Estrutura do projeto:
+## Instalação
 
-Toda a aplicação foi construida com NodeJs e com TypeScript e o core se encontra na pasta /src
+1. Clone o repositorio:
 
-| Pasta          | Descrição                                                                                               |
-| :------------- | :------------------------------------------------------------------------------------------------------ |
-| `use-cases`    | `As funcionalidades da aplicação, desconectada de frameworks ou camadas externas`                       |
-| `repositories` | `Implementação da persistencia de dados da aplicação`                                                   |
-| `lib`          | `Configuração da biblioteca PrismaORM`                                                                  |
-| `http`         | `Implementação dos controllers da aplicação, assim como o middleware para lidar com a autenticação JWT` |
-| `env`          | `Definição da tipagem e verificação das variaveis de ambiente`                                          |
-| `utils`        | `Funções adicionais para ajudar nos testes`                                                             |
-| `@types`       | `Definição da tipagem para a lib "@fastify/jwt"`                                                        |
+```bash
+  git clone https://github.com/Fernanda-Kipper/desafio-backend-uber.git
+```
 
-Portanto, dentro do diretorio /prisma é possivel achar o schema no qual o banco de dados foi criado, como suas migrations e um ambiente
-personalizado para rodar os testes end-to-end
+2. Instale as dependencias
 
-### Regras da aplicação
+```bash
+  npm i
+```
 
-- [x] Deve ser possível cadastrar um pet
-- [x] Deve ser possível listar todos os pets disponíveis para adoção em uma cidade
-- [x] Deve ser possível filtrar pets por suas características
-- [x] Deve ser possível visualizar detalhes de um pet para adoção
-- [x] Deve ser possível se cadastrar como uma ORG
-- [x] Deve ser possível realizar login como uma ORG
+3. Preencha as variaveis de ambiente .env
 
-### Regras de negócio
+## Uso da API
 
-- [x] Para listar os pets, obrigatoriamente precisamos informar a cidade
-- [x] Uma ORG precisa ter um endereço e um número de WhatsApp
-- [x] Um pet deve estar ligado a uma ORG
-- [x] O usuário que quer adotar, entrará em contato com a ORG via WhatsApp
-- [x] Todos os filtros, além da cidade, são opcionais
-- [x] Para uma ORG acessar a aplicação como admin, ela precisa estar logada
+1. Iniciar containers
+
+```bash
+  docker compose up -d
+```
+
+2. Iniciar servidor
+
+```bash
+  npm run start:dev
+```
+
+3. Realizar requisições a API usando o endereço base http://localhost:"SuaPorta"/"endpoint"
+
+## Endpoints
+
+### POST Autenticação de ongs
+
+```bash
+  POST /ongs/sign-in - Atraves do e-mail e senha, realiza autenticação da ong e devolve um token jwt para o cliente, assim como seta um http cookie para o refresh token.
+```
+
+```json
+{
+  "email": "test@example.com",
+  "password": "test"
+}
+```
+
+### PATCH Refresh
+
+```bash
+  PATCH /ongs/refresh - Atraves do e-mail e senha, realiza a atualização do token jwt de curta duração.
+```
+
+```json
+{}
+```
+
+### POST Cadastro de ongs
+
+```bash
+  POST /ongs - Cadastra uma nova ong na aplicação
+```
+
+```json
+{
+  "name": "Teste",
+  "city": "Teste",
+  "address": "Rua teste",
+  "zipcode": "00000000",
+  "email": "test@example.com",
+  "password": "test",
+  "whatsapp": "11 999999999"
+}
+```
+
+### GET Buscar pets
+
+```bash
+  GET /pets?city=test&size=test&independece=test - Busca pets com base em filtros passados.
+```
+
+### GET Busca um pet especifico
+
+```bash
+  GET /pets/:id - Busca pets com base em um id.
+```
+
+### GET Entrar em contato com a ong para adotar um pet
+
+```bash
+  GET /pets/:id/adopt - Com base em um pet, busca dados da ong para entrar em contato
+```
+
+### POST Criar pet
+
+```bash
+  POST /ongs/:id/pets - Com base em no id de uma ong, cria um novo pet
+```
+
+obs: Essa rota precisa que a ong esteja autenticada
+
+```json
+"name": "Pet 01",
+"about": "A new Pet",
+"age": "Child",
+"energy": "Low",
+"size": "Small",
+"independence": "Low",
+"ong_id": "ong-1",
+```
